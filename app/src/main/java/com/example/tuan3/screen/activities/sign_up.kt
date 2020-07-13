@@ -1,4 +1,4 @@
-package com.example.tuan3.screen
+package com.example.tuan3.screen.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

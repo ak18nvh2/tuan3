@@ -2,6 +2,7 @@ package com.example.tuan3.data
 
 import android.content.ContentValues
 import android.content.Context
+import android.content.SharedPreferences
 import android.database.Cursor
 import android.database.sqlite.SQLiteConstraintException
 import android.database.sqlite.SQLiteDatabase
@@ -43,6 +44,7 @@ class DBManager(context : Context) : SQLiteOpenHelper(context, DATABASE_NAME,nul
 
     fun themTaiKhoan (taiKhoan: TaiKhoan) : Int{
 
+
         val values = ContentValues()
         values.put(FULLNAME, taiKhoan.getmFullName())
         values.put(EMAIL, taiKhoan.getmEmail())
@@ -65,7 +67,6 @@ class DBManager(context : Context) : SQLiteOpenHelper(context, DATABASE_NAME,nul
         var cr : Cursor = readableDatabase.rawQuery(sql,null)
         if(cr.moveToFirst()){
             if(cr.getString(2) == pass){
-                Toast.makeText(context, "Đăng nhập thành công!", Toast.LENGTH_LONG).show()
                 return  1
             } else {
                 Toast.makeText(context, "Sai mật khẩu!", Toast.LENGTH_LONG).show()

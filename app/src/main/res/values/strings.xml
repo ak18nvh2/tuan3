@@ -2,5 +2,6 @@
     <string name="app_name">tuan3</string>
     <string-array name="choose_array">
         <item>All Categories</item>
+        <item>Nguyen Trung Minh Hieu</item>
     </string-array>
 </resources>

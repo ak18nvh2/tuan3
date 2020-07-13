@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".screen.MainActivity">
+    tools:context=".screen.activities.MainActivity">
     <androidx.constraintlayout.widget.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -76,7 +76,6 @@
     <EditText
         android:layout_width="0dp"
         android:layout_height="40dp"
-        android:text="olson.minnie@ellen.biz"
         android:textColor="#161f3d"
         android:id="@+id/edtEA_SI"
         app:layout_constraintRight_toLeftOf="@id/glVer2"
@@ -88,7 +87,6 @@
         android:layout_height="wrap_content"
         android:text="PASSWORD"
         android:id="@+id/tvPW"
-
         android:textColor="#161f3d"
         app:layout_constraintTop_toBottomOf="@id/edtEA_SI"
         app:layout_constraintLeft_toRightOf="@id/glVer1"
@@ -103,7 +101,6 @@
         app:layout_constraintRight_toLeftOf="@id/glVer2"
         android:inputType="textPassword"
         android:maxLength="17"
-        android:text="12345678911111"
         ></EditText>
     <TextView
         android:layout_width="wrap_content"
