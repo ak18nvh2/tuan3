@@ -57,5 +57,6 @@
     <color name="gunmetal_0">#004a5162</color>
     <color name="battleship_grey_0">#00626b80</color>
     <color name="dark_blue_grey">#161f3d</color>
+    <color name="w">#f2f3fa</color>
 
 </resources>

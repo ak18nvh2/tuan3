@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -11,28 +12,36 @@
         app:layout_constraintGuide_percent="0.4"
         android:id="@+id/gl"
         ></androidx.constraintlayout.widget.Guideline>
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/gl_frag_home_2"
+        app:layout_constraintGuide_percent="0.135"></androidx.constraintlayout.widget.Guideline>
+
     <Spinner
+        app:layout_constraintBottom_toTopOf="@id/tvAddress"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/gl"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/sp1"
+        style="@style/TextStyle31"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tvAddress"
-        android:id="@+id/sp1"
-        android:layout_marginTop="15dp"
         android:layout_marginLeft="15dp"
         android:gravity="center"
         android:paddingTop="20dp"
-        style="@style/TextStyle31"
         ></Spinner>
     <TextView
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/gl_frag_home_2"
+        app:layout_constraintVertical_bias="0.8"
         android:layout_width="0dp"
         android:layout_marginLeft="15dp"
         android:layout_height="wrap_content"
         android:id="@+id/tvAddress"
-        app:layout_constraintTop_toBottomOf="@id/sp1"
-
-        app:layout_constraintLeft_toLeftOf="parent"
         android:text="Chicago, IL 60611, USA"
         android:textColor="@color/dark_blue_grey"
         ></TextView>
@@ -43,8 +52,18 @@
         android:src="@drawable/search"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/sp1"
-        app:layout_constraintLeft_toRightOf="@id/tvAddress"
+        app:layout_constraintBottom_toBottomOf="@id/tvAddress"
+        app:layout_constraintLeft_toRightOf="@id/sp1"
         app:layout_constraintHorizontal_bias="0.9"
-        android:layout_marginTop="40dp"
         ></ImageView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/rvFeedContent"
+        app:layout_constraintTop_toBottomOf="@id/gl_frag_home_2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

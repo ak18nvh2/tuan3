@@ -157,7 +157,7 @@
         android:layout_marginTop="30dp"
         android:text="Sign up"
         android:textAllCaps="false"
-        android:background="#e9446a"
+        android:background="@drawable/rectangular_btn"
         android:textColor="#ffff"></Button>
     <TextView
         android:layout_width="wrap_content"

@@ -25,7 +25,7 @@ class home : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        val intent = getIntent()
+        val intent = intent
         tk = intent.getStringExtra("email")
         mk = intent.getStringExtra("pass")
         ImgHomeClick()
@@ -50,24 +50,25 @@ class home : AppCompatActivity(), View.OnClickListener {
         imgMess.setImageResource(R.drawable.group_8_white)
         imgHome.setImageResource(R.drawable.group_7)
     }
+    fun ImgMessClick(){
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        val fragment = MessFragment()
+        fragmentTransaction.replace(R.id.frameHome, fragment)
+        fragmentTransaction.commit()
+        tvMess.setBackgroundColor(resources.getColor(R.color.red))
+        tvHome.setBackgroundColor(resources.getColor(R.color.white))
+        tvPlus.setBackgroundColor(resources.getColor(R.color.white))
+        tvPro.setBackgroundColor(resources.getColor(R.color.white))
+        tvNoti.setBackgroundColor(resources.getColor(R.color.white))
+        imgMess.setImageResource(R.drawable.group_8)
+        imgHome.setImageResource(R.drawable.group_7_white)
+    }
     override fun  onClick(v: View){
 
         when(v){
             imgHome -> ImgHomeClick()
-            imgMess -> {
-                val fragmentManager = supportFragmentManager
-                val fragmentTransaction = fragmentManager.beginTransaction()
-                val fragment = MessFragment()
-                fragmentTransaction.replace(R.id.frameHome, fragment)
-                fragmentTransaction.commit()
-                tvMess.setBackgroundColor(resources.getColor(R.color.red))
-                tvHome.setBackgroundColor(resources.getColor(R.color.white))
-                tvPlus.setBackgroundColor(resources.getColor(R.color.white))
-                tvPro.setBackgroundColor(resources.getColor(R.color.white))
-                tvNoti.setBackgroundColor(resources.getColor(R.color.white))
-                imgMess.setImageResource(R.drawable.group_8)
-                imgHome.setImageResource(R.drawable.group_7_white)
-            }
+            imgMess -> ImgMessClick()
             imgPlus -> {
                 tvMess.setBackgroundColor(resources.getColor(R.color.white))
                 tvHome.setBackgroundColor(resources.getColor(R.color.white))

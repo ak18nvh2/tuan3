@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="12dp"
+
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:background="@drawable/rectangular_rv_feedcontent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/ctTrong"
+        android:background="@drawable/rectangular_item_fragment_home"
+        android:padding="10dp"
+        >
+
+        <ImageView
+            android:id="@+id/imgAvt"
+            android:layout_width="40dp"
+            android:layout_height="0dp"
+            android:src="@drawable/rectangle_copy"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            ></ImageView>
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="Nguyen Trung Minh Hieu"
+            android:textColor="@color/dark_blue_grey"
+            android:textSize="18dp"
+            app:layout_constraintLeft_toRightOf="@id/imgAvt"
+            app:layout_constraintTop_toTopOf="@id/imgAvt"></TextView>
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yesterday"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="@id/imgAvt"
+            app:layout_constraintLeft_toLeftOf="@id/tvName"></TextView>
+
+        <ImageView
+            android:id="@+id/imgMenudots"
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/menu_dots"
+            app:layout_constraintBottom_toBottomOf="@id/tvTime"
+            app:layout_constraintDimensionRatio="3:1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvName"></ImageView>
+
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="What is the loop of Creation? How is there something from nothing? In spite of the fact that it is impossible to prove that anythin…."
+            android:textSize="14dp"
+            app:layout_constraintLeft_toLeftOf="@id/tvTime"
+            app:layout_constraintRight_toRightOf="@id/imgMenudots"
+            app:layout_constraintTop_toBottomOf="@id/tvTime"></TextView>
+
+        <ImageView
+            android:id="@+id/imgContent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/rectangle_copy"
+            app:layout_constraintLeft_toLeftOf="@id/tvContent"
+            app:layout_constraintRight_toRightOf="@id/tvContent"
+            app:layout_constraintTop_toBottomOf="@id/tvContent"></ImageView>
+
+        <ImageView
+            android:id="@+id/imgLove"
+            android:layout_width="24dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/heart_pink"
+            app:layout_constraintLeft_toLeftOf="@id/imgContent"
+            app:layout_constraintTop_toBottomOf="@id/imgContent"></ImageView>
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/imgCmt"
+            android:src="@drawable/comment_1"
+            app:layout_constraintLeft_toRightOf="@id/imgLove"
+            app:layout_constraintTop_toTopOf="@id/imgLove"></ImageView>
+
+        <TextView
+            android:id="@+id/tvMoney"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="$340.00"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/imgLove"
+            app:layout_constraintRight_toRightOf="@id/imgContent"
+            app:layout_constraintTop_toTopOf="@id/imgLove"
+            app:layout_constraintLeft_toRightOf="@id/imgCmt"
+            android:textAlignment="textEnd"
+            tools:ignore="RtlCompat"></TextView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
