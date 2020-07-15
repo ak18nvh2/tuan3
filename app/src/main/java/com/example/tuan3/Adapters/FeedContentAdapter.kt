@@ -14,13 +14,20 @@ import com.example.tuan3.model.FeedContent
 class FeedContentAdapter() : RecyclerView.Adapter<FeedContentAdapter.ViewHolder>() {
     lateinit var context: Context
     lateinit var feedContents: ArrayList<FeedContent>
+    private lateinit var adapterEvent : AdapterEvent
 
-    constructor(context: Context, feedContents: ArrayList<FeedContent>) : this() {
+    constructor(adapterEvent: AdapterEvent,context: Context, feedContents: ArrayList<FeedContent>) : this() {
         this.context = context
         this.feedContents = feedContents
+        this.adapterEvent = adapterEvent
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View, adapterEvent: AdapterEvent) : RecyclerView.ViewHolder(itemView) {
+        init {
+            itemView.findViewById<ImageView>(R.id.imgAvt).setOnClickListener{
+                adapterEvent.onClickItem(adapterPosition)
+            }
+        }
         val avt: ImageView = itemView.findViewById(R.id.imgAvt)
         val name: TextView = itemView.findViewById(R.id.tvName)
         val time : TextView = itemView.findViewById(R.id.tvTime)
@@ -29,14 +36,12 @@ class FeedContentAdapter() : RecyclerView.Adapter<FeedContentAdapter.ViewHolder>
         val love : ImageView = itemView.findViewById(R.id.imgLove)
         val cmt : ImageView = itemView.findViewById(R.id.imgCmt)
         val money : TextView = itemView.findViewById(R.id.tvMoney)
-
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(context)
         val homeView: View = layoutInflater.inflate(R.layout.item_fragment_home, parent, false)
-        var viewHoder: ViewHolder= ViewHolder(homeView)
+        var viewHoder: ViewHolder= ViewHolder(homeView, adapterEvent)
         return viewHoder
     }
 
@@ -54,10 +59,8 @@ class FeedContentAdapter() : RecyclerView.Adapter<FeedContentAdapter.ViewHolder>
         holder.contentText.text= feedContents[position].content
         holder.money.text= feedContents[position].money
 
-        holder.avt.setOnClickListener(){
-
-
-        }
-
+    }
+     interface AdapterEvent{
+        fun onClickItem(pos : Int)
     }
 }
