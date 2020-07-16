@@ -18,6 +18,7 @@ class HomeFragment(val adapter: FeedContentAdapter): Fragment() {
     val types = arrayOf("All Categories", "Admin")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
         val t  =inflater.inflate(R.layout.fragment_home, container, false )
         val spinner = t.findViewById<Spinner>(R.id.sp1)
         spinner?.adapter = ArrayAdapter(activity!!.applicationContext, R.layout.support_simple_spinner_dropdown_item, types) as SpinnerAdapter

@@ -25,55 +25,38 @@ class home : AppCompatActivity(), View.OnClickListener, FeedContentAdapter.Adapt
     private var arrayList: ArrayList<FeedContent> = ArrayList()
     var tk: String? = null
     var mk: String? = null
+    var checkLogOut: Int = 1
+    val fragmentManager = supportFragmentManager
+    lateinit var adapterHome: FeedContentAdapter
+    var feedFragment: HomeFragment? = null
+    lateinit var messFragment: MessFragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        this.init()
         val intent = intent
         tk = intent.getStringExtra("email")
         mk = intent.getStringExtra("pass")
-        ImgHomeClick()
+
         imgHome.setOnClickListener(this)
         imgMess.setOnClickListener(this)
         imgNoti.setOnClickListener(this)
         imgPlus.setOnClickListener(this)
         imgPro.setOnClickListener(this)
 
+
     }
-    fun ImgHomeClick (){
 
+    fun ImgHomeClick() {
 
-        arrayList.add( FeedContent("Martin Palmer",R.drawable.profile,"Today, 03:24 PM",
-                "What is the loop of Creation? How is there something from nothing? In spite" +
-                        " of the fact that it is impossible to prove that anythin….",
-                0,R.drawable.heart, R.drawable.comment_1,"$340.00",1))
-        arrayList.add( FeedContent("Pearl Myers",R.drawable.rectangle_copy,"Today, 03:24 PM",
-                "I am looking for a chilled out roommate for a house on 17th floor of a XYZ appartment.",
-                R.drawable.rectangle_copy,R.drawable.heart_pink, R.drawable.comment_1,"$240.00",2))
-        arrayList.add( FeedContent("Gary Rose",R.drawable.robin,"Today, 03:24 PM",
-                "What is the loop of Creation? How is there something from nothing? In spite" +
-                        " of the fact that it is impossible to prove that anythin….",
-                R.drawable.rectangle_copy,R.drawable.heart, R.drawable.comment_1,"$1940.00",3))
-        arrayList.add( FeedContent("Adelaide Palmer",R.drawable.luffy,"Today, 03:24 PM",
-                "There is this awesome event happening. Let’s join it guys.",
-                R.drawable.rectangle_copy,R.drawable.heart_pink, R.drawable.comment_1,"$3420.00",4))
-        arrayList.add( FeedContent("Martin Adele",R.drawable.zoro,"Today, 03:24 PM",
-                "What is the loop of Creation? How is there something from nothing? In spite" +
-                        " of the fact that it is impossible to prove that anythin….",
-                0,R.drawable.heart_pink, R.drawable.comment_1,"$3140.00",5))
-        arrayList.add( FeedContent("Beatrix Palmer",R.drawable.chopper,"Today, 03:24 PM",
-                "There is this awesome event happening. Let’s join it guys.",
-                R.drawable.rectangle_copy,R.drawable.heart_pink, R.drawable.comment_1,"$3640.00",6))
-        arrayList.add( FeedContent("Martin Belinda",R.drawable.sanji,"Today, 03:24 PM",
-                "I am looking for a chilled out roommate for a house on 17th floor of a XYZ appartment.",
-                R.drawable.rectangle_copy,R.drawable.heart, R.drawable.comment_1,"$3540.00",7))
+        val frag = supportFragmentManager.findFragmentByTag("FeedFrag")
+        if(frag != null){
+            fragmentManager.popBackStack("FeedFrag", 0)
+        }
 
-
-        var adapterHome: FeedContentAdapter = FeedContentAdapter(this,this,arrayList)
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        val fragment = HomeFragment(adapterHome)
-        fragmentTransaction.replace(R.id.frameHome, fragment)
-        fragmentTransaction.commit()
+        // set navigation bar
         tvHome.setBackgroundColor(resources.getColor(R.color.red))
         tvPlus.setBackgroundColor(resources.getColor(R.color.white))
         tvPro.setBackgroundColor(resources.getColor(R.color.white))
@@ -82,11 +65,19 @@ class home : AppCompatActivity(), View.OnClickListener, FeedContentAdapter.Adapt
         imgMess.setImageResource(R.drawable.group_8_white)
         imgHome.setImageResource(R.drawable.group_7)
     }
-    fun ImgMessClick(feedContent: FeedContent?){
-        val fragmentManager = supportFragmentManager
+
+    fun ImgMessClick(feedContent: FeedContent?) {
         val fragmentTransaction = fragmentManager.beginTransaction()
-        val fragment = MessFragment(feedContent)
-        fragmentTransaction.replace(R.id.frameHome, fragment)
+        val frag = supportFragmentManager.findFragmentByTag("MessFrag")
+        if(frag != null){
+            Toast.makeText(this, "Cos rooif nef", Toast.LENGTH_SHORT).show()
+            fragmentManager.popBackStack("MessFrag", 0)
+        } else {
+            val fragment = MessFragment(feedContent)
+            fragmentTransaction.replace(R.id.frameHome, fragment, "MessFrag")
+            fragmentTransaction.addToBackStack("MessFrag")
+        }
+
         fragmentTransaction.commit()
         tvMess.setBackgroundColor(resources.getColor(R.color.red))
         tvHome.setBackgroundColor(resources.getColor(R.color.white))
@@ -96,9 +87,10 @@ class home : AppCompatActivity(), View.OnClickListener, FeedContentAdapter.Adapt
         imgMess.setImageResource(R.drawable.group_8)
         imgHome.setImageResource(R.drawable.group_7_white)
     }
-    override fun  onClick(v: View){
 
-        when(v){
+    override fun onClick(v: View) {
+
+        when (v) {
             imgHome -> ImgHomeClick()
             imgMess -> ImgMessClick(null)
             imgPlus -> {
@@ -123,9 +115,9 @@ class home : AppCompatActivity(), View.OnClickListener, FeedContentAdapter.Adapt
                 tvNoti.setBackgroundColor(resources.getColor(R.color.white))
                 val share: SharedPreferences = getSharedPreferences(SHARE_PREFERENCES_NAME, Context.MODE_PRIVATE)
                 val editor: SharedPreferences.Editor = share.edit()
-                val intent : Intent = Intent(this, MainActivity::class.java )
-                intent.putExtra("email",share.getString(TAI_KHOAN,""))
-                intent.putExtra("pass", share.getString(MAT_KHAU,""))
+                val intent: Intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("email", share.getString(TAI_KHOAN, ""))
+                intent.putExtra("pass", share.getString(MAT_KHAU, ""))
                 editor.remove(MAT_KHAU)
                 editor.apply()
                 startActivity(intent)
@@ -136,6 +128,69 @@ class home : AppCompatActivity(), View.OnClickListener, FeedContentAdapter.Adapt
 
     override fun onClickItem(pos: Int) {
         ImgMessClick(arrayList[pos])
+    }
+
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount > 1) {
+            supportFragmentManager.popBackStack()
+        } else if (supportFragmentManager.backStackEntryCount == 1 && checkLogOut == 1) {
+                checkLogOut = 0
+                Toast.makeText(this, "Lan nua la out day", Toast.LENGTH_LONG).show()
+            } else {
+                val share: SharedPreferences = getSharedPreferences(SHARE_PREFERENCES_NAME, Context.MODE_PRIVATE)
+                val editor: SharedPreferences.Editor = share.edit()
+                val intent: Intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("email", share.getString(TAI_KHOAN, ""))
+                intent.putExtra("pass", share.getString(MAT_KHAU, ""))
+                editor.remove(MAT_KHAU)
+                editor.apply()
+                startActivity(intent)
+            }
+
+
+    }
+
+    fun init() {
+        arrayList.add(FeedContent("Martin Palmer", R.drawable.profile, "Today, 03:24 PM",
+                "What is the loop of Creation? How is there something from nothing? In spite" +
+                        " of the fact that it is impossible to prove that anythin….",
+                0, R.drawable.heart, R.drawable.comment_1, "$340.00", 1))
+        arrayList.add(FeedContent("Pearl Myers", R.drawable.rectangle_copy, "Today, 03:24 PM",
+                "I am looking for a chilled out roommate for a house on 17th floor of a XYZ appartment.",
+                R.drawable.rectangle_copy, R.drawable.heart_pink, R.drawable.comment_1, "$240.00", 2))
+        arrayList.add(FeedContent("Gary Rose", R.drawable.robin, "Today, 03:24 PM",
+                "What is the loop of Creation? How is there something from nothing? In spite" +
+                        " of the fact that it is impossible to prove that anythin….",
+                R.drawable.rectangle_copy, R.drawable.heart, R.drawable.comment_1, "$1940.00", 3))
+        arrayList.add(FeedContent("Adelaide Palmer", R.drawable.luffy, "Today, 03:24 PM",
+                "There is this awesome event happening. Let’s join it guys.",
+                R.drawable.rectangle_copy, R.drawable.heart_pink, R.drawable.comment_1, "$3420.00", 4))
+        arrayList.add(FeedContent("Martin Adele", R.drawable.zoro, "Today, 03:24 PM",
+                "What is the loop of Creation? How is there something from nothing? In spite" +
+                        " of the fact that it is impossible to prove that anythin….",
+                0, R.drawable.heart_pink, R.drawable.comment_1, "$3140.00", 5))
+        arrayList.add(FeedContent("Beatrix Palmer", R.drawable.chopper, "Today, 03:24 PM",
+                "There is this awesome event happening. Let’s join it guys.",
+                R.drawable.rectangle_copy, R.drawable.heart_pink, R.drawable.comment_1, "$3640.00", 6))
+        arrayList.add(FeedContent("Martin Belinda", R.drawable.sanji, "Today, 03:24 PM",
+                "I am looking for a chilled out roommate for a house on 17th floor of a XYZ appartment.",
+                R.drawable.rectangle_copy, R.drawable.heart, R.drawable.comment_1, "$3540.00", 7))
+
+
+        this.adapterHome = FeedContentAdapter(this, this, arrayList)
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        val fragment = HomeFragment(adapterHome)
+        fragmentTransaction.replace(R.id.frameHome, fragment,"FeedFrag")
+        fragmentTransaction.addToBackStack("FeedFrag")
+        fragmentTransaction.commit()
+        tvHome.setBackgroundColor(resources.getColor(R.color.red))
+        tvPlus.setBackgroundColor(resources.getColor(R.color.white))
+        tvPro.setBackgroundColor(resources.getColor(R.color.white))
+        tvNoti.setBackgroundColor(resources.getColor(R.color.white))
+        tvMess.setBackgroundColor(resources.getColor(R.color.white))
+        imgMess.setImageResource(R.drawable.group_8_white)
+        imgHome.setImageResource(R.drawable.group_7)
     }
 
 
