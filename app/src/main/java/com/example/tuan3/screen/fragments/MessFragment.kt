@@ -23,8 +23,6 @@ class MessFragment(feedContent: FeedContent?) : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(t.context)
         var arrayList: ArrayList<MessContent> = ArrayList()
 
-
-
         arrayList.add(MessContent("Vernon Bradley", R.drawable.profile, "5 : 45 PM", "Shall we meet today?", "1", 8))
         arrayList.add(MessContent("Jason Howard", R.drawable.profile, "5 : 45 PM", "Hahahaha… \uD83D\uDE02", "", 9))
         arrayList.add(MessContent("Martin Adele", R.drawable.zoro, "5 : 45 PM", "Sounds perfect to me. \uD83D\uDE0E", "", 5))
@@ -34,6 +32,7 @@ class MessFragment(feedContent: FeedContent?) : Fragment() {
         arrayList.add(MessContent("Vernon Bradley", R.drawable.profile, "5 : 45 PM", "Shall we meet today?", "1", 12))
         arrayList.add(MessContent("Gary Rose", R.drawable.robin, "5 : 45 PM", "Ohh yeaah! YOLO!! \uD83D\uDE0D❤️", "", 3))
         arrayList.add(MessContent("Adelaide Palmer", R.drawable.profile, "5 : 45 PM", "Shall we meet today?", "1", 30))
+
         var  check : Int = -1
         if (this.feedContent != null) {
 
@@ -42,7 +41,6 @@ class MessFragment(feedContent: FeedContent?) : Fragment() {
                     Toast.makeText(t.context, "${value.mID} + ${feedContent!!.mID} + $index", Toast.LENGTH_LONG).show()
                     check=index
                 }
-
             }
 
             arrayList.add(0, MessContent(feedContent!!.name, feedContent!!.avt, "5 : 45 PM", "Shall we meet today?", "1", feedContent!!.mID))

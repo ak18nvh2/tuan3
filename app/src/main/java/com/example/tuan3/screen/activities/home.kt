@@ -28,9 +28,8 @@ class home : AppCompatActivity(), View.OnClickListener, FeedContentAdapter.Adapt
     var checkLogOut: Int = 1
     val fragmentManager = supportFragmentManager
     lateinit var adapterHome: FeedContentAdapter
-    var feedFragment: HomeFragment? = null
-    lateinit var messFragment: MessFragment
-
+    lateinit var fragment: HomeFragment
+    lateinit var fragmentMess: MessFragment
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -42,8 +41,7 @@ class home : AppCompatActivity(), View.OnClickListener, FeedContentAdapter.Adapt
 
         imgHome.setOnClickListener(this)
         imgMess.setOnClickListener(this)
-        imgNoti.setOnClickListener(this)
-        imgPlus.setOnClickListener(this)
+       
         imgPro.setOnClickListener(this)
 
 
@@ -51,10 +49,9 @@ class home : AppCompatActivity(), View.OnClickListener, FeedContentAdapter.Adapt
 
     fun ImgHomeClick() {
 
-        val frag = supportFragmentManager.findFragmentByTag("FeedFrag")
-        if(frag != null){
-            fragmentManager.popBackStack("FeedFrag", 0)
-        }
+
+        fragmentManager.popBackStack("FeedFrag", 0)
+
 
         // set navigation bar
         tvHome.setBackgroundColor(resources.getColor(R.color.red))
@@ -69,16 +66,17 @@ class home : AppCompatActivity(), View.OnClickListener, FeedContentAdapter.Adapt
     fun ImgMessClick(feedContent: FeedContent?) {
         val fragmentTransaction = fragmentManager.beginTransaction()
         val frag = supportFragmentManager.findFragmentByTag("MessFrag")
-        if(frag != null){
+        if (frag != null) {
             Toast.makeText(this, "Cos rooif nef", Toast.LENGTH_SHORT).show()
             fragmentManager.popBackStack("MessFrag", 0)
         } else {
-            val fragment = MessFragment(feedContent)
-            fragmentTransaction.replace(R.id.frameHome, fragment, "MessFrag")
+            fragmentMess = MessFragment(feedContent)
+            fragmentTransaction.replace(R.id.frameHome, fragmentMess, "MessFrag")
             fragmentTransaction.addToBackStack("MessFrag")
+            fragmentTransaction.commit()
         }
 
-        fragmentTransaction.commit()
+
         tvMess.setBackgroundColor(resources.getColor(R.color.red))
         tvHome.setBackgroundColor(resources.getColor(R.color.white))
         tvPlus.setBackgroundColor(resources.getColor(R.color.white))
@@ -93,20 +91,7 @@ class home : AppCompatActivity(), View.OnClickListener, FeedContentAdapter.Adapt
         when (v) {
             imgHome -> ImgHomeClick()
             imgMess -> ImgMessClick(null)
-            imgPlus -> {
-                tvMess.setBackgroundColor(resources.getColor(R.color.white))
-                tvHome.setBackgroundColor(resources.getColor(R.color.white))
-                tvPlus.setBackgroundColor(resources.getColor(R.color.red))
-                tvPro.setBackgroundColor(resources.getColor(R.color.white))
-                tvNoti.setBackgroundColor(resources.getColor(R.color.white))
-            }
-            imgNoti -> {
-                tvMess.setBackgroundColor(resources.getColor(R.color.white))
-                tvHome.setBackgroundColor(resources.getColor(R.color.white))
-                tvPlus.setBackgroundColor(resources.getColor(R.color.white))
-                tvPro.setBackgroundColor(resources.getColor(R.color.white))
-                tvNoti.setBackgroundColor(resources.getColor(R.color.red))
-            }
+
             imgPro -> {
                 tvMess.setBackgroundColor(resources.getColor(R.color.white))
                 tvHome.setBackgroundColor(resources.getColor(R.color.white))
@@ -132,20 +117,32 @@ class home : AppCompatActivity(), View.OnClickListener, FeedContentAdapter.Adapt
 
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount > 1) {
+            checkLogOut = 1
             supportFragmentManager.popBackStack()
-        } else if (supportFragmentManager.backStackEntryCount == 1 && checkLogOut == 1) {
-                checkLogOut = 0
-                Toast.makeText(this, "Lan nua la out day", Toast.LENGTH_LONG).show()
-            } else {
-                val share: SharedPreferences = getSharedPreferences(SHARE_PREFERENCES_NAME, Context.MODE_PRIVATE)
-                val editor: SharedPreferences.Editor = share.edit()
-                val intent: Intent = Intent(this, MainActivity::class.java)
-                intent.putExtra("email", share.getString(TAI_KHOAN, ""))
-                intent.putExtra("pass", share.getString(MAT_KHAU, ""))
-                editor.remove(MAT_KHAU)
-                editor.apply()
-                startActivity(intent)
+            val frag = supportFragmentManager.findFragmentByTag("FeedFrag")
+            if (fragment.isVisible) {
+                Toast.makeText(this, "dang hien thi home", Toast.LENGTH_LONG).show()
+                tvHome.setBackgroundColor(resources.getColor(R.color.red))
+                tvPlus.setBackgroundColor(resources.getColor(R.color.white))
+                tvPro.setBackgroundColor(resources.getColor(R.color.white))
+                tvNoti.setBackgroundColor(resources.getColor(R.color.white))
+                tvMess.setBackgroundColor(resources.getColor(R.color.white))
+                imgMess.setImageResource(R.drawable.group_8_white)
+                imgHome.setImageResource(R.drawable.group_7)
             }
+        } else if (supportFragmentManager.backStackEntryCount == 1 && checkLogOut == 1) {
+            checkLogOut = 0
+            Toast.makeText(this, "Lan nua la out day", Toast.LENGTH_LONG).show()
+        } else {
+            val share: SharedPreferences = getSharedPreferences(SHARE_PREFERENCES_NAME, Context.MODE_PRIVATE)
+            val editor: SharedPreferences.Editor = share.edit()
+            val intent: Intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("email", share.getString(TAI_KHOAN, ""))
+            intent.putExtra("pass", share.getString(MAT_KHAU, ""))
+            editor.remove(MAT_KHAU)
+            editor.apply()
+            startActivity(intent)
+        }
 
 
     }
@@ -176,12 +173,11 @@ class home : AppCompatActivity(), View.OnClickListener, FeedContentAdapter.Adapt
                 "I am looking for a chilled out roommate for a house on 17th floor of a XYZ appartment.",
                 R.drawable.rectangle_copy, R.drawable.heart, R.drawable.comment_1, "$3540.00", 7))
 
-
         this.adapterHome = FeedContentAdapter(this, this, arrayList)
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-        val fragment = HomeFragment(adapterHome)
-        fragmentTransaction.replace(R.id.frameHome, fragment,"FeedFrag")
+        fragment = HomeFragment(adapterHome)
+        fragmentTransaction.replace(R.id.frameHome, fragment, "FeedFrag")
         fragmentTransaction.addToBackStack("FeedFrag")
         fragmentTransaction.commit()
         tvHome.setBackgroundColor(resources.getColor(R.color.red))
