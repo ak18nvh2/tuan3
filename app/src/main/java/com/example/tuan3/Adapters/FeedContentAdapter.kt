@@ -6,28 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tuan3.R
 import com.example.tuan3.model.FeedContent
+import com.example.tuan3.model.MessContent
+import com.example.tuan3.screen.activities.ICommunicateFragment
 
-class FeedContentAdapter() : RecyclerView.Adapter<FeedContentAdapter.ViewHolder>() {
-    lateinit var context: Context
-    lateinit var feedContents: ArrayList<FeedContent>
-    private lateinit var adapterEvent : AdapterEvent
+class FeedContentAdapter(var listener: ICommunicateFragment, var context: Context) : RecyclerView.Adapter<FeedContentAdapter.ViewHolder>() {
 
-    constructor(adapterEvent: AdapterEvent,context: Context, feedContents: ArrayList<FeedContent>) : this() {
-        this.context = context
-        this.feedContents = feedContents
-        this.adapterEvent = adapterEvent
-    }
+    private var list = ArrayList<FeedContent>()
 
-    class ViewHolder(itemView: View, adapterEvent: AdapterEvent) : RecyclerView.ViewHolder(itemView) {
-        init {
-            itemView.findViewById<ImageView>(R.id.imgAvt).setOnClickListener{
-                adapterEvent.onClickItem(adapterPosition)
-            }
-        }
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val avt: ImageView = itemView.findViewById(R.id.imgAvt)
         val name: TextView = itemView.findViewById(R.id.tvName)
         val time : TextView = itemView.findViewById(R.id.tvTime)
@@ -37,30 +26,36 @@ class FeedContentAdapter() : RecyclerView.Adapter<FeedContentAdapter.ViewHolder>
         val cmt : ImageView = itemView.findViewById(R.id.imgCmt)
         val money : TextView = itemView.findViewById(R.id.tvMoney)
     }
-
+    fun  setList(list : ArrayList<FeedContent>){
+        this.list = list
+        notifyDataSetChanged()
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val layoutInflater = LayoutInflater.from(context)
+        val layoutInflater = LayoutInflater.from(parent.context)
         val homeView: View = layoutInflater.inflate(R.layout.item_fragment_home, parent, false)
-        var viewHoder: ViewHolder= ViewHolder(homeView, adapterEvent)
+        var viewHoder: ViewHolder= ViewHolder(homeView)
         return viewHoder
     }
 
     override fun getItemCount(): Int {
-        return feedContents.size
+        return list.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.avt.setImageResource(feedContents[position].avt)
-        holder.contentImg.setImageResource(feedContents[position].iContent)
-        holder.love.setImageResource(feedContents[position].love)
-        holder.cmt.setImageResource(feedContents[position].comment)
-        holder.name.text= feedContents[position].name
-        holder.time.text= feedContents[position].time
-        holder.contentText.text= feedContents[position].content
-        holder.money.text= feedContents[position].money
+        holder.avt.setImageResource(list[position].avt)
+        holder.contentImg.setImageResource(list[position].iContent)
+        holder.love.setImageResource(list[position].love)
+        holder.cmt.setImageResource(list[position].comment)
+        holder.name.text= list[position].name
+        holder.time.text= list[position].time
+        holder.contentText.text= list[position].content
+        holder.money.text= list[position].money
+        val doiTuong = MessContent( list[position].name, list[position].avt, "Yesterday",
+        "Contenttt", "2" , list[position].mID)
+        holder.avt.setOnClickListener(){
+            listener.doSomeThing(doiTuong)
+        }
 
     }
-     interface AdapterEvent{
-        fun onClickItem(pos : Int)
-    }
+
 }

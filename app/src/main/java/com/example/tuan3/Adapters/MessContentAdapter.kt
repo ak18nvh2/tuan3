@@ -13,14 +13,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.tuan3.R
 import com.example.tuan3.model.FeedContent
 import com.example.tuan3.model.MessContent
+import com.example.tuan3.screen.activities.ICommunicateFragment
 
-class MessContentAdapter() : RecyclerView.Adapter<MessContentAdapter.ViewHolder>() {
-    lateinit var context: Context
-    lateinit var messContents : ArrayList<MessContent>
+class MessContentAdapter(var mContext: Context) : RecyclerView.Adapter<MessContentAdapter.ViewHolder>() {
 
-    constructor(context: Context, messContents: ArrayList<MessContent>) : this() {
-        this.context = context
-        this.messContents = messContents
+
+    private var list = ArrayList<MessContent>()
+
+    fun setList(list: ArrayList<MessContent>) {
+        this.list = list
+        notifyDataSetChanged()
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -33,27 +35,24 @@ class MessContentAdapter() : RecyclerView.Adapter<MessContentAdapter.ViewHolder>
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val layoutInflater = LayoutInflater.from(context)
+        val layoutInflater = LayoutInflater.from(mContext)
         val messView: View = layoutInflater.inflate(R.layout.item_fragment_mess, parent, false)
-        var viewHolder: ViewHolder= ViewHolder(messView)
-        return viewHolder
+        return ViewHolder(messView)
     }
 
     override fun getItemCount(): Int {
-        return messContents.size
+        return list.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.avt.setImageResource(messContents[position].avt)
-        holder.name.text= messContents[position].name
-        holder.time.text= messContents[position].time
-        holder.contentText.text= messContents[position].content
-        holder.noti.text = messContents[position].noti
-        if(messContents[position].noti == "") {
+        holder.avt.setImageResource(list[position].avt)
+        holder.name.text= list[position].name
+        holder.time.text= list[position].time
+        holder.contentText.text= list[position].content
+        holder.noti.text = list[position].noti
+        if(list[position].noti == "") {
             holder.noti.setBackgroundResource(R.color.w)
             holder.name.setTextColor(Color.parseColor("#161f3d"))
         }
-
-
     }
 }

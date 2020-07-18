@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.tuan3.R
 import com.example.tuan3.data.DBManager
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_sign_up.*
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -54,7 +53,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
             }
             tvSU -> {
-                val intent: Intent = Intent(this, sign_up::class.java)
+                val intent: Intent = Intent(this, Sign_up_Activity::class.java)
                 startActivity(intent)
                 finish()
             }
@@ -76,12 +75,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             intent.putExtra("pass", pas)
             startActivity(intent)
         } else {
-            val intent = getIntent()
+            val intent = intent
             var tk: String? = intent.getStringExtra("email")
             var mk: String? = intent.getStringExtra("pass")
             if (tk == null) {
                 tk = name
-
             }
             if (mk == null) {
                 mk = ""
