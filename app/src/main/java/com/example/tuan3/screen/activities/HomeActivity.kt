@@ -18,17 +18,13 @@ import kotlinx.android.synthetic.main.activity_home.*
 class home : AppCompatActivity(), View.OnClickListener, ICommunicateFragment {
 
     private val listFragment = arrayListOf(FeedFragment(), MessFragment())
-    var tk: String? = null
-    var mk: String? = null
+
     private val fragmentManager : FragmentManager = supportFragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        val intent = intent
-        tk = intent.getStringExtra("email")
-        mk = intent.getStringExtra("pass")
         img_Home.setOnClickListener(this)
         img_Mess.setOnClickListener(this)
         img_Pro.setOnClickListener(this)
