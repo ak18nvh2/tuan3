@@ -1,6 +1,8 @@
 package com.example.tuan3.screen.fragments
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +17,55 @@ import kotlinx.android.synthetic.main.fragment_feed.view.*
 
 
 class FeedFragment() : Fragment() {
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Log.d("Fragment A", "onAttachFragment A")
+    }
+
+
+
+
+
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        Log.d("Fragment A", "onActivityCreatedFragment A")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("Fragment A", "onStartFragment A")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("Fragment A", "onResumeFragment A")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("Fragment A", "onPauseFragment A")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("Fragment A", "onStopFragment A")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d("Fragment A", "onDestroyViewFragment A")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("Fragment A", "onDestroyFragment A")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.d("Fragment A", "onDetachFragment A")
+    }
     val list: ArrayList<FeedContent> = ArrayList()
     var mAdapter: FeedContentAdapter? = null
     val types = arrayOf("All Categories", "Admin")
@@ -31,7 +82,7 @@ class FeedFragment() : Fragment() {
                 val type = parent?.getItemAtPosition(position).toString()
             }
         }
-
+        Log.d("Fragment A", "onCreateViewFragment A")
         return t
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -103,7 +154,7 @@ class FeedFragment() : Fragment() {
         list.add(FeedContent("Martin Belinda", R.drawable.profile20, "Today, 03:24 PM",
                 "I am looking for a chilled out roommate for a house on 17th floor of a XYZ appartment.",
                 R.drawable.luffy, R.drawable.heart, R.drawable.comment_1, "$3540.00", 21))
-
+        Log.d("Fragment A", "onCreateFragment A")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -111,7 +162,7 @@ class FeedFragment() : Fragment() {
         mAdapter?.setList(list)
         view.rvFeedContent.layoutManager = LinearLayoutManager(activity)
         view.rvFeedContent.adapter = mAdapter
-
+        Log.d("Fragment A", "onViewCreatedFragment A")
 
     }
 

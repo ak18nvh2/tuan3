@@ -1,6 +1,8 @@
 package com.example.tuan3.screen.fragments
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,11 +22,13 @@ class MessFragment() : Fragment() {
     var mAdapter: MessContentAdapter? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val t = inflater.inflate(R.layout.fragment_mess, container, false)
+        Log.d("Fragment B", "onCreateViewFragment B")
         return t
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mAdapter = MessContentAdapter(activity as home)
+        Log.d("Fragment B", "onCreateFragment B")
         list.add(MessContent("Martin Palmer", R.drawable.profile, "5 : 45 PM", "Shall we meet today?", "1", 1))
         list.add(MessContent("Pearl Myers", R.drawable.profile1, "5 : 45 PM", "Hahahaha… \uD83D\uDE02", "", 2))
     }
@@ -33,8 +37,57 @@ class MessFragment() : Fragment() {
         mAdapter?.setList(list)
         view.rvMessContent.layoutManager = LinearLayoutManager(activity)
         view.rvMessContent.adapter = mAdapter
+        Log.d("Fragment B", "onViewCreated B")
+
+    }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Log.d("Fragment B", "onAttachFragment B")
+    }
 
 
+
+
+
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        Log.d("Fragment B", "onActivityCreatedFragment B")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("Fragment B", "onStartFragment B")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("Fragment B", "onResumeFragment B")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("Fragment B", "onPauseFragment B")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("Fragment B", "onStopFragment B")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d("Fragment B", "onDestroyViewFragment B")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("Fragment B", "onDestroyFragment B")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.d("Fragment B", "onDetachFragment B")
     }
 
 }

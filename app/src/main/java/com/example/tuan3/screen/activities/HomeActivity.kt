@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.example.tuan3.R
 import com.example.tuan3.model.MessContent
@@ -19,7 +20,7 @@ class home : AppCompatActivity(), View.OnClickListener, ICommunicateFragment {
     private val listFragment = arrayListOf(FeedFragment(), MessFragment())
     var tk: String? = null
     var mk: String? = null
-    val fragmentManager = supportFragmentManager
+    private val fragmentManager : FragmentManager = supportFragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -32,7 +33,13 @@ class home : AppCompatActivity(), View.OnClickListener, ICommunicateFragment {
         img_Mess.setOnClickListener(this)
         img_Pro.setOnClickListener(this)
 
-        showFragment(listFragment[0])
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        listFragment.forEachIndexed { index, fragment ->
+            fragmentTransaction.add(R.id.frameHome, fragment)
+            fragmentTransaction.hide(fragment)
+        }
+        fragmentTransaction.show(listFragment[0])
+        fragmentTransaction.commit()
 
 
 
@@ -58,19 +65,10 @@ class home : AppCompatActivity(), View.OnClickListener, ICommunicateFragment {
         }
     }
 
+    var isAddedFeed = 0
     private fun showFragment(fragment: Fragment) {
-        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-        if (fragment.isAdded) {
-            fragmentTransaction.show(fragment)
-            listFragment.forEach {
-                if (it != fragment) fragmentTransaction.hide(it)
-            }
-        } else {
-            fragmentTransaction.add(R.id.frameHome, fragment)
-        }
-        fragmentTransaction.commit()
+        isAddedFeed++;
         val i= listFragment.indexOf(fragment)
-
         if(i == 0){
             tvHome.setBackgroundColor(resources.getColor(R.color.red))
             tvPlus.setBackgroundColor(resources.getColor(R.color.white))
@@ -88,6 +86,16 @@ class home : AppCompatActivity(), View.OnClickListener, ICommunicateFragment {
             img_Mess.setImageResource(R.drawable.group_8)
             img_Home.setImageResource(R.drawable.group_7_white)
         }
+
+        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+        if (fragment.isAdded) {
+            fragmentTransaction.show(fragment)
+            listFragment.forEach {
+                if (it != fragment) fragmentTransaction.hide(it)
+            }
+        }
+        fragmentTransaction.commit()
+
     }
 
 
@@ -99,7 +107,7 @@ class home : AppCompatActivity(), View.OnClickListener, ICommunicateFragment {
                 (listFragment[1] as? MessFragment)?.let {
 
                     it.list.forEachIndexed { index, messContent ->
-                        if (it.list[index].mID == string.mID)
+                        if (messContent.mID == string.mID)
                             i = index
                     }
                     if(i != -1){
