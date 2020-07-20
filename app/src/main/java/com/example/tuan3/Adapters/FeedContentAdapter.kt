@@ -12,7 +12,7 @@ import com.example.tuan3.model.FeedContent
 import com.example.tuan3.model.MessContent
 import com.example.tuan3.screen.activities.ICommunicateFragment
 
-class FeedContentAdapter(var listener: ICommunicateFragment, var context: Context) : RecyclerView.Adapter<FeedContentAdapter.ViewHolder>() {
+class FeedContentAdapter(var listener: ICommunicateFragment, var mContext: Context) : RecyclerView.Adapter<FeedContentAdapter.ViewHolder>() {
 
     private var list = ArrayList<FeedContent>()
 
@@ -31,10 +31,10 @@ class FeedContentAdapter(var listener: ICommunicateFragment, var context: Contex
         notifyDataSetChanged()
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val homeView: View = layoutInflater.inflate(R.layout.item_fragment_home, parent, false)
-        var viewHoder: ViewHolder= ViewHolder(homeView)
-        return viewHoder
+        val layoutInflater = LayoutInflater.from(mContext)
+        val homeView: View = layoutInflater.inflate(R.layout.item_fragment_feed, parent, false)
+        return ViewHolder(homeView)
+
     }
 
     override fun getItemCount(): Int {
@@ -50,7 +50,7 @@ class FeedContentAdapter(var listener: ICommunicateFragment, var context: Contex
         holder.time.text= list[position].time
         holder.contentText.text= list[position].content
         holder.money.text= list[position].money
-        val doiTuong = MessContent( list[position].name, list[position].avt, "Yesterday",
+        var doiTuong = MessContent( list[position].name, list[position].avt, "Yesterday",
         "Contenttt", "2" , list[position].mID)
         holder.avt.setOnClickListener(){
             listener.doSomeThing(doiTuong)

@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.89"
+        app:layout_constraintGuide_percent="0.9"
         android:id="@+id/gl_01"
         ></androidx.constraintlayout.widget.Guideline>
 <FrameLayout
@@ -45,7 +45,7 @@
             android:background="#ff00"
             ></TextView>
         <ImageView
-            android:id="@+id/imgHome"
+            android:id="@+id/img_Home"
             android:layout_width="match_parent"
             android:layout_height="25dp"
             android:layout_marginTop="20dp"
@@ -65,7 +65,7 @@
             android:id="@+id/tvMess"
             ></TextView>
         <ImageView
-            android:id="@+id/imgMess"
+            android:id="@+id/img_Mess"
             android:layout_width="match_parent"
             android:layout_height="25dp"
             android:layout_marginTop="20dp"
@@ -85,7 +85,7 @@
         android:id="@+id/tvPlus"
         ></TextView>
     <ImageView
-        android:id="@+id/imgPlus"
+        android:id="@+id/img_Plus"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="10dp"
@@ -105,7 +105,7 @@
         android:id="@+id/tvNoti"
         ></TextView>
     <ImageView
-        android:id="@+id/imgNoti"
+        android:id="@+id/img_Noti"
         android:layout_width="match_parent"
         android:layout_height="25dp"
         android:layout_marginTop="20dp"
@@ -125,7 +125,7 @@
         android:id="@+id/tvPro"
         ></TextView>
     <ImageView
-        android:id="@+id/imgPro"
+        android:id="@+id/img_Pro"
         android:layout_width="match_parent"
         android:layout_height="25dp"
         android:layout_marginTop="20dp"

@@ -11,8 +11,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".screen.activities.home"></activity>
         <activity android:name=".screen.RecyclerView" />
-        <activity android:name=".screen.activities.Sign_up_Activity" />
-        <activity android:name=".screen.activities.MainActivity">
+        <activity android:name=".screen.activities.SignUpActivity" />
+        <activity android:name=".screen.activities.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

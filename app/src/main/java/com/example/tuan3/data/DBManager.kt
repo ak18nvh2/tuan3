@@ -57,7 +57,7 @@ class DBManager(context : Context) : SQLiteOpenHelper(context, DATABASE_NAME,nul
         }
         else{
             getWritableDatabase().insert(TABLE_NAME, null, values)
-            Toast.makeText(context, "Đăng ký thành công!", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Sign Up Success!", Toast.LENGTH_LONG).show()
             return  1
         }
     }

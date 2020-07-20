@@ -54,5 +54,9 @@ class MessContentAdapter(var mContext: Context) : RecyclerView.Adapter<MessConte
             holder.noti.setBackgroundResource(R.color.w)
             holder.name.setTextColor(Color.parseColor("#161f3d"))
         }
+        else {
+            holder.name.setTextColor(Color.parseColor("#e9446a"))
+            holder.noti.setBackgroundResource(R.drawable.circle_text_noti_mess)
+        }
     }
 }

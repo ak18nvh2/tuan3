@@ -100,7 +100,7 @@
         app:layout_constraintLeft_toRightOf="@id/glVer1"
         app:layout_constraintTop_toBottomOf="@id/tvFN"
         android:textColor="#161f3d"
-        android:text="Minnie Olson"></EditText>
+        android:hint="Type your full name!"></EditText>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -116,23 +116,23 @@
     <EditText
         android:layout_width="0dp"
         android:layout_height="40dp"
-        android:id="@+id/edt_EM_SU"
+        android:id="@+id/edt_EM"
         app:layout_constraintLeft_toRightOf="@id/glVer1"
         app:layout_constraintRight_toLeftOf="@id/glVer2"
         app:layout_constraintTop_toBottomOf="@id/tvEM"
-        android:text="olson.minnie@ellen.biz"
+        android:hint="Type your email address!"
         android:textColor="#161f3d"
         ></EditText>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="PASSWORD"
-        android:id="@+id/tvPW"
+        android:id="@+id/tv_PassWord"
         android:letterSpacing="0.1"
         android:lineHeight="8sp"
         android:textSize="10sp"
         app:layout_constraintLeft_toRightOf="@id/glVer1"
-        app:layout_constraintTop_toBottomOf="@id/edt_EM_SU"
+        app:layout_constraintTop_toBottomOf="@id/edt_EM"
         android:layout_marginTop="30dp"
         ></TextView>
     <EditText
@@ -142,9 +142,9 @@
         android:inputType="textPassword"
         app:layout_constraintLeft_toRightOf="@id/glVer1"
         app:layout_constraintRight_toLeftOf="@id/glVer2"
-        app:layout_constraintTop_toBottomOf="@id/tvPW"
+        app:layout_constraintTop_toBottomOf="@id/tv_PassWord"
         android:maxLength="17"
-        android:text="123456hieu"
+        android:hint="Type your password!"
         android:textColor="#161f3d"
         ></EditText>
     <Button
@@ -175,7 +175,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sign in"
-        android:id="@+id/tvSI"
+        android:id="@+id/tv_SI"
         android:textColor="#e9446a"
         app:layout_constraintLeft_toRightOf="@id/tvQS"
         app:layout_constraintTop_toBottomOf="@id/btn_SU"
