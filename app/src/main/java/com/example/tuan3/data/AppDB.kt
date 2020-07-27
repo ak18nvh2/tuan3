@@ -5,12 +5,14 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.tuan3.DAO.AccountDAO
+import com.example.tuan3.DAO.MessContentDAO
 import com.example.tuan3.model.Account
+import com.example.tuan3.model.MessContent
 
-@Database(entities = [(Account::class)],version = 1)
+@Database(entities = [(Account::class),(MessContent::class)],version = 3)
 abstract class AppDB : RoomDatabase(){
     abstract fun accountDAO() : AccountDAO
-
+    abstract fun messContentDAO() : MessContentDAO
     companion object {
         private var INSTANCE: AppDB?= null
         private val DB_NAME = "user_database"
@@ -25,7 +27,7 @@ abstract class AppDB : RoomDatabase(){
                         context.applicationContext,
                         AppDB::class.java,
                         DB_NAME
-                ).run { allowMainThreadQueries() }.build()
+                ).fallbackToDestructiveMigration().run { allowMainThreadQueries() }.build()
                 INSTANCE = instance
                 return instance
             }

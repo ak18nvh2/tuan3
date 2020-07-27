@@ -87,6 +87,7 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun init() {
         val share: SharedPreferences = getSharedPreferences(SHARE_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        val acc : String? = share.getString(EMAIL,"")
         val pass: String? = share.getString(PASSWORD, "")
         if (pass != "") {
             val intent: Intent = Intent(this, home::class.java)

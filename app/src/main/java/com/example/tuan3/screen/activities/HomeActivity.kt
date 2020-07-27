@@ -10,17 +10,24 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.example.tuan3.R
+import com.example.tuan3.data.AppDB
+import com.example.tuan3.model.Account
 import com.example.tuan3.model.MessContent
 import com.example.tuan3.screen.fragments.FeedFragment
 import com.example.tuan3.screen.fragments.MessFragment
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.activity_sign_up.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
-class home : AppCompatActivity(), View.OnClickListener, ICommunicateFragment {
+class home : AppCompatActivity(), View.OnClickListener, ICommunicateFragment, CoroutineScope {
 
     private val listFragment = arrayListOf(FeedFragment(), MessFragment())
 
     private val fragmentManager : FragmentManager = supportFragmentManager
-
+    private var appDB: AppDB? = null
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -97,24 +104,33 @@ class home : AppCompatActivity(), View.OnClickListener, ICommunicateFragment {
 
     override fun doSomeThing(string: MessContent) {
         var i = -1
+        appDB = AppDB.getDatabase(this)
+
         when {
             listFragment[0].isVisible -> {
                 showFragment(listFragment[1])
                 (listFragment[1] as? MessFragment)?.let {
-
                     it.list.forEachIndexed { index, messContent ->
                         if (messContent.mID == string.mID)
                             i = index
                     }
                     if(i != -1){
-                        it.list.removeAt(i)
+                        appDB?.messContentDAO()?.deleteByID(it.list[i].mID)
                     }
-                    it.list.add(0, string)
-                    it.mAdapter?.setList(it.list)
+                    launch {
+                        appDB?.messContentDAO()?.addMessContent(string)
+                        it.list.clear()
+                        it.list = (appDB?.messContentDAO()?.getAllMessContent() as ArrayList<MessContent>)
+                        it.mAdapter?.setList(it.list)
+                    }
+
                 }
             }
         }
     }
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main
 
 
 }

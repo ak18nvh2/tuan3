@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tuan3.R
+import com.example.tuan3.data.AppDB
 import com.example.tuan3.model.FeedContent
 import com.example.tuan3.model.MessContent
 import com.example.tuan3.screen.activities.ICommunicateFragment
@@ -19,7 +20,7 @@ class MessContentAdapter(var mContext: Context) : RecyclerView.Adapter<MessConte
 
 
     private var list = ArrayList<MessContent>()
-
+    private var appDB: AppDB? = null
     fun setList(list: ArrayList<MessContent>) {
         this.list = list
         notifyDataSetChanged()
@@ -57,6 +58,13 @@ class MessContentAdapter(var mContext: Context) : RecyclerView.Adapter<MessConte
         else {
             holder.name.setTextColor(Color.parseColor("#e9446a"))
             holder.noti.setBackgroundResource(R.drawable.circle_text_noti_mess)
+        }
+        appDB = AppDB.getDatabase(mContext)
+        holder.avt.setOnClickListener(){
+            appDB?.messContentDAO()?.deleteByID(list[position].mID)
+            this.list.clear()
+            this.list = appDB?.messContentDAO()?.getAllMessContent() as ArrayList<MessContent>
+            this.setList(this.list)
         }
     }
 }
