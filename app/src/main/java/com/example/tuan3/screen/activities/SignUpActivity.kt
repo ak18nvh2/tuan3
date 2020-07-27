@@ -9,30 +9,33 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
 import com.example.tuan3.R
-import com.example.tuan3.data.DBManager
-import com.example.tuan3.model.TaiKhoan
+import com.example.tuan3.data.AppDB
+import com.example.tuan3.model.Account
+import kotlinx.android.synthetic.main.activity_sign_in.*
 import kotlinx.android.synthetic.main.activity_sign_up.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
 
-class SignUpActivity : AppCompatActivity(), View.OnClickListener {
-    val db = DBManager(this)
+class SignUpActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope {
 
+    private var appDB: AppDB? = null
+    var check = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
         init()
     }
 
-    fun taiKhoan(): TaiKhoan {
-        return TaiKhoan(edt_FN.text.toString(), edt_EM.text.toString(), edt_PW.text.toString())
-    }
 
     private fun init() {
-        
+
         btn_SU.setOnClickListener(this)
         tv_SI.setOnClickListener(this)
         btnQuayLai_su.setOnClickListener(this)
-        
+
         edt_PW.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (edt_PW.text.toString().length > 16) {
@@ -63,8 +66,16 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
 
     fun registerAccount() {
         if (checkValidate()) {
-            val check = db.themTaiKhoan(taiKhoan())
-            if (check == 1) {
+            appDB = AppDB.getDatabase(this)
+            var account = appDB?.accountDAO()?.getAccByEmail(edt_EM.text.toString())
+            if (account == null) check = 1
+            if (check == 0) Toast.makeText(this, "Đã tồn tại tài khoản này!", Toast.LENGTH_SHORT).show()
+            else if (check == 1) {
+
+                launch {
+                    appDB?.accountDAO()?.addAccount(Account(edt_EM.text.toString(), edt_FN.text.toString(), edt_PW.text.toString()))
+                }
+
                 val intent: Intent = Intent()
                 intent.putExtra(SignInActivity.EMAIL, edt_EM.text.toString())
                 intent.putExtra(SignInActivity.PASSWORD, edt_PW.text.toString())
@@ -102,4 +113,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
         }
         return true
     }
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main
 }

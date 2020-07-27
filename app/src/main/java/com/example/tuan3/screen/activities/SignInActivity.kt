@@ -7,15 +7,17 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tuan3.R
-import com.example.tuan3.data.DBManager
+import com.example.tuan3.data.AppDB
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
 
 class SignInActivity : AppCompatActivity(), View.OnClickListener {
-    val db = DBManager(this)
     var check: Int = 0
+    private var appDB: AppDB? = null
+
     companion object {
         val REQUEST_FROM_SIGNIN_TO_SIGNUP = 1
         val SHARE_PREFERENCES_NAME: String = "account"
@@ -32,8 +34,23 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View) {
         when (v) {
             btn_SignIn -> {
-                check = db.LayTaiKhoanTheoEmail(edt_EmailAddressSignIn.text.toString(), edt_PassWordSignIn.text.toString())
+                // check = db.LayTaiKhoanTheoEmail(edt_EmailAddressSignIn.text.toString(), edt_PassWordSignIn.text.toString())
+                appDB = AppDB.getDatabase(this)
+                var account = appDB?.accountDAO()?.getAccByEmail(edt_EmailAddressSignIn.text.toString())
+                if (account == null) {
+                    check = 1 // don't have this email in database
+                } else {
+                    if (account.passWord != edt_PassWordSignIn.text.toString()) {
+                        check = 2 // have this email in database but password incorrect
+                    } else {
+                        check = 3 // corecct email and password
+                    }
+                }
                 if (check == 1) {
+                    Toast.makeText(this, "Không tồn tại tài khoản này!", Toast.LENGTH_SHORT).show()
+                } else if (check == 2) {
+                    Toast.makeText(this, "Sai mật khẩu!", Toast.LENGTH_SHORT).show()
+                } else if (check == 3) {
                     val share: SharedPreferences = getSharedPreferences(SHARE_PREFERENCES_NAME, Context.MODE_PRIVATE)
                     val editor: SharedPreferences.Editor = share.edit()
                     editor.putString(EMAIL, edt_EmailAddressSignIn.text.toString())
